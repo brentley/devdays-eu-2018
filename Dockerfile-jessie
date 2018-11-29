@@ -1,0 +1,15 @@
+FROM debian:jessie-20171210
+
+
+RUN apt-get update
+RUN apt-get install -y nodejs npm && \
+    update-alternatives --install /usr/bin/node nodejs /usr/bin/nodejs 100
+
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install 
+
+# copy the code
+COPY . .
+EXPOSE 3000
+ENTRYPOINT ["node","server.js"]
